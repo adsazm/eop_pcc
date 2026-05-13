@@ -53,7 +53,7 @@ if difh != 0:
     xmotionh = xmotionh[:-difh]
     ymotionh = ymotionh[:-difh]
     zmotionh = zmotionh[:-difh]
-   
+
 xmass = [xmassa[i]+xmasso[i]+xmassh[i] for i in range(len(xmassa))]
 ymass = [ymassa[i]+ymasso[i]+ymassh[i] for i in range(len(ymassa))]
 zmass = [zmassa[i]+zmasso[i]+zmassh[i] for i in range(len(zmassa))]

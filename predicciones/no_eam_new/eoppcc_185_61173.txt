@@ -1,0 +1,11 @@
+61173 	nan 	nan 	nan 	nan 	nan 	nan 	 0.52345 	 0.02800
+61174 	nan 	nan 	nan 	nan 	nan 	nan 	 0.49995 	 0.01305
+61175 	nan 	nan 	nan 	nan 	nan 	nan 	 0.52005 	 0.01702
+61176 	nan 	nan 	nan 	nan 	nan 	nan 	 0.46194 	 0.03398
+61177 	nan 	nan 	nan 	nan 	nan 	nan 	 0.42444 	 0.06292
+61178 	nan 	nan 	nan 	nan 	nan 	nan 	 0.43556 	 0.09089
+61179 	nan 	nan 	nan 	nan 	nan 	nan 	 0.44126 	 0.09715
+61180 	nan 	nan 	nan 	nan 	nan 	nan 	 0.50179 	 0.07262
+61181 	nan 	nan 	nan 	nan 	nan 	nan 	 0.54064 	 0.01176
+61182 	nan 	nan 	nan 	nan 	nan 	nan 	 0.52598 	-0.06527
+61183 	nan 	nan 	nan 	nan 	nan 	nan 	 0.56135 	-0.12886
