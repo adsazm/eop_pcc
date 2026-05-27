@@ -220,7 +220,7 @@ def generar(lista,k):
     return date,xmass,ymass,zmass,xmotion,ymotion,zmotion
 
 
-def read_aam():
+def read_aam(today):
     """
     Returns
     -------
@@ -234,6 +234,7 @@ def read_aam():
     zmass : list of floats
         idem
     """
+    # AAM Data from previous years
     direc = dd+'/datos/AAM/'
     ls = [f'{direc}ESMGFZ_AAM_v1.0_03h_2023.asc', f'{direc}ESMGFZ_AAM_v1.0_03h_2024.asc',f'{direc}ESMGFZ_AAM_v1.0_03h_2025.asc']
     date,xmass,ymass,zmass,xmotion,ymotion,zmotion = [],[],[],[],[],[],[]
@@ -250,7 +251,8 @@ def read_aam():
         xmotion+=xmo
         ymotion+=ymo
         zmotion+=zmo 
-   
+    
+    # AAM data from this year
     url = 'https://rz-vm480.gfz.de/repository/entry/'
     r2 = requests.get(url+"show", params = {'entryid':'df062563-2fda-4651-97be-376dfd6924ad'})
     r2t = r2.text
@@ -258,28 +260,35 @@ def read_aam():
     r3 = requests.get(url+'get/ESMGFZ_AAM_v1.0_03h_2026.asc',params = {'entryid':r2t[ind-36-11:ind-11]})
     aamlast = r3.text
     
+    # AAM 10-day forecast data
     r4 = requests.get(url+"show", params = {'entryid':'a0dc0850-d97d-4a4b-9121-e98515e4d8c6'})
     r4t = r4.text
     r4t = r4t[r4t.index('"name":"ESMGFZ_AAM_v1.0_W')+20:]
     ind = r4t.index('"name":"ESMGFZ_AAM_v1.0_W')    
     r5 = requests.get(url+'get/'+str(r4t[ind+8:ind+55]), params = {'entryid':r4t[ind-39:ind-3]})
     aux = r5.text
-
     cont,cont2,i,j = 0,0,0,0
     while(cont<40):
         if aamlast[j] =="\n":
-          cont+=1
+            cont+=1
         j+=1
      
         while(cont2<45):
             if aux[i] =="\n":
               cont2+=1
             i+=1
-            
     aamlast=(aamlast[j:]).split("\n")
     ld = aux[i:].split("\n") #prediction of yesterday values (needed to predict today's)
-    aamlast = [aamlast[i].split() for i in range(len(aamlast)-1)]+[ld[0].split()]
-    
+    last_data=float(aamlast[-2].split()[4])
+    if last_data +1 <= today:
+        # This years' data + all missing data until today
+        index = 8*(today-int(last_data))
+        aamlast = [aamlast[i].split() for i in range(len(aamlast)-1)]+[ld[i].split() for i in range(0,index)]
+    elif int(last_data) == today -1:
+        # This years' data + today's predicted data
+        aamlast = [aamlast[i].split() for i in range(len(aamlast)-1)]+[ld[0].split()]
+    else:    
+        return -1,0,0,0,0,0,0
     d,xma,yma,zma,xmo,ymo,zmo=generar(aamlast,False)
     date+=d
     xmass+=xma
@@ -291,7 +300,7 @@ def read_aam():
     
     return date,xmass,ymass,zmass,xmotion,ymotion,zmotion
 
-def read_oam():
+def read_oam(today):
     """
     Returns
     -------
@@ -337,17 +346,29 @@ def read_oam():
     r5 = requests.get(url+'get/'+str(r4t[ind+8:ind+41]), params = {'entryid':r4t[ind-39:ind-3]})
     aux = r5.text 
     
-    cont,j = 0, 0
-    while(cont<42):
+    cont,cont2,i,j = 0, 0, 0, 0
+    while(cont<42): # Salto de línea en año actual
         if oamlast[j] =="\n":
           cont+=1
         j+=1
-    
-    oamlast=(oamlast[j:]).split("\n")
-    ld = aux[j:].split("\n")[2:] #prediction of yesterday values (needed to predict today's)
+        
+        while(cont2<42): # Salto de línea en predicción
+            if aux[i] =="\n":
+              cont2+=1
+            i+=1
             
-    oamlast = [oamlast[i].split() for i in range(len(oamlast)-1)]+[ld[0].split()]
-    
+    oamlast=(oamlast[j:]).split("\n")
+    ld = aux[i:].split("\n") #prediction of yesterday values (needed to predict today's)
+    last_data=float(oamlast[-2].split()[4])
+    if last_data +1 <= today:
+        # This years' data + all missing data until today
+        index = 8*(today-int(last_data))
+        oamlast = [oamlast[i].split() for i in range(len(oamlast)-1)]+[ld[i].split() for i in range(0,index)]
+    elif int(last_data) == today -1:
+        # This years' data + today's predicted data
+        oamlast = [oamlast[i].split() for i in range(len(oamlast)-1)]+[ld[0].split()]
+    else:    
+        return -1,0,0,0,0,0,0
     d,xma,yma,zma,xmo,ymo,zmo=generar(oamlast,False)
     date+=d
     xmass+=xma
@@ -389,7 +410,7 @@ def reduccionHAM(lista):
     return lista_aux
 
 
-def read_ham():
+def read_ham(today):
     """
     Returns
     -------
@@ -421,9 +442,7 @@ def read_ham():
         zmass+=zma
         xmotion+=xmo
         ymotion+=ymo
-        zmotion+=zmo
-  
-    
+        zmotion+=zmo 
     
     url = 'https://rz-vm480.gfz.de/repository/entry/'
     r1 = requests.get(url+"show", params = {'entryid':'ca1a8036-1c8a-4a45-9d11-f3ac69e2692a'})
@@ -432,14 +451,37 @@ def read_ham():
     r2 = requests.get(url+"get/ESMGFZ_HAM_v1.2_24h_2026.asc", params = {'entryid':r1t[ind-36-11:ind-11]})
     hamlast = r2.text
     
-    cont,j = 0, 0
-    while(cont<49):
+    r4 = requests.get(url+"show", params = {'entryid':'8c9c0bb7-cbad-4507-a43c-e9591a66d7de'})
+    r4t = r4.text
+    r4t = r4t[r4t.index('"name":"ESMGFZ_HAM_v1.2')+20:]
+    ind = r4t.index('"name":"ESMGFZ_HAM_v1.2')    
+    r5 = requests.get(url+'get/'+str(r4t[ind+8:ind+41]), params = {'entryid':r4t[ind-39:ind-3]})
+    aux = r5.text
+    
+    cont,cont2,i,j = 0, 0, 0, 0
+    while(cont<49): # Salto de línea en año actual
         if hamlast[j] =="\n":
           cont+=1
         j+=1
+        
+        while(cont2<49): # Salto de línea en predicción
+            if aux[i] =="\n":
+              cont2+=1
+            i+=1
 
     hamlast=(hamlast[j:]).split("\n")
-    hamlast = [hamlast[i].split() for i in range(len(hamlast)-1)]
+    ld = aux[i:].split("\n") #prediction of yesterday values (needed to predict today's)
+    last_data=float(hamlast[-2].split()[4])
+    if last_data +1 <= today:
+        # This years' data + all missing data until today
+        index = (today-int(last_data))
+        hamlast = [hamlast[i].split() for i in range(len(hamlast)-1)]+[ld[i].split() for i in range(0,index)]
+    elif int(last_data) == today -1:
+        # This years' data + today's predicted data
+        hamlast = [hamlast[i].split() for i in range(len(hamlast)-1)]+[ld[0].split()]
+    else:    
+        return -1,0,0,0,0,0,0
+    
     d,xma,yma,zma,xmo,ymo,zmo=generarHAM(hamlast,False)
     date+=d
     xmass+=xma
@@ -458,7 +500,6 @@ def read_ham():
     ymotion = reduccionHAM(ymotion)
     zmotion = reduccionHAM(zmotion)
     return date,xmass,ymass,zmass,xmotion,ymotion,zmotion
-
 
 
 def leap(x,mjd,leaps):  #entre 52000 y ahora mjd

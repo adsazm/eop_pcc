@@ -7,9 +7,9 @@ Created on Tue Dec  3 12:36:25 2024
 
 import numpy as np
 import pandas as pd
-import time
 import datetime
 from functions import * 
+import sys
 
 f1 = datetime.datetime.today()
 today = greg_to_mjd(f1) 
@@ -19,9 +19,12 @@ leaps = [50082,50629,51178,53735,54831,56108,57203,57753]
 mjd1,xp1,yp1,dx1,dy1,dut1 = read_iers()
 xfcn, yfcn, mjd_fcn = coord_fcn(dx1, dy1, mjd1)
 
-datea,xmassa,ymassa,zmassa,xmotiona,ymotiona,zmotiona = read_aam()
-dateo,xmasso,ymasso,zmasso,xmotiono,ymotiono,zmotiono = read_oam()
-dateh,xmassh,ymassh,zmassh,xmotionh,ymotionh,zmotionh = read_ham()
+datea,xmassa,ymassa,zmassa,xmotiona,ymotiona,zmotiona = read_aam(today)
+dateo,xmasso,ymasso,zmasso,xmotiono,ymotiono,zmotiono = read_oam(today)
+dateh,xmassh,ymassh,zmassh,xmotionh,ymotionh,zmotionh = read_ham(today)
+if datea == -1 or dateo == -1 or dateh == -1:
+    print('ERROR: Not a valid date')
+    sys.exit()
 
 difa = datea[-1]-mjd1[-1]#+1
 difo = dateo[-1]-mjd1[-1]#+1

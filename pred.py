@@ -7,12 +7,10 @@ Created on Tue Dec  3 12:36:25 2024
 
 import numpy as np
 import pandas as pd
-import time
-import math
 import datetime
 from functions import * 
-import plotly.graph_objects as go
 import os
+import sys
 
 dd = os.getcwd()
 
@@ -32,9 +30,12 @@ dy = dy1+dy2
 dut = dut1+dut2
 xfcn, yfcn, mjd_fcn = coord_fcn(dx, dy, mjd)
 
-datea,xmassa,ymassa,zmassa,xmotiona,ymotiona,zmotiona = read_aam()
-dateo,xmasso,ymasso,zmasso,xmotiono,ymotiono,zmotiono = read_oam()
-dateh,xmassh,ymassh,zmassh,xmotionh,ymotionh,zmotionh = read_ham()
+datea,xmassa,ymassa,zmassa,xmotiona,ymotiona,zmotiona = read_aam(today)
+dateo,xmasso,ymasso,zmasso,xmotiono,ymotiono,zmotiono = read_oam(today)
+dateh,xmassh,ymassh,zmassh,xmotionh,ymotionh,zmotionh = read_ham(today)
+if datea == -1 or dateo == -1 or dateh == -1:
+    print('ERROR: Not a valid date')
+    sys.exit()
 
 difa = datea[-1]-mjd[-1]
 difo = dateo[-1]-mjd[-1]
