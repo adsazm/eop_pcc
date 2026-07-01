@@ -425,7 +425,7 @@ def read_ham(today):
         idem
     """
     direc = dd+'/datos/HAM/'
-    ls = [f'{direc}ESMGFZ_HAM_v1.2_24h_2023.asc',f'{direc}ESMGFZ_HAM_v1.2_24h_2024.asc',f'{direc}ESMGFZ_HAM_v1.2_24h_2024.asc']
+    ls = [f'{direc}ESMGFZ_HAM_v1.2_24h_2023.asc',f'{direc}ESMGFZ_HAM_v1.2_24h_2024.asc',f'{direc}ESMGFZ_HAM_v1.2_24h_2025.asc']
     #solutions are at 12h, not 00h; so we will calculate the mean value between two solutions to get 00h.
     #For 01-01 we need the 31-12 solution, which is written in the following line of the code:
     date,xmass,ymass,zmass,xmotion,ymotion,zmotion = [59944.500],[-1.077015111728597e-07],[1.872920064634999e-07],[9.658558932245592e-10],[-2.633075391255430e-11],[-1.347446554917640e-11],[2.536914218629560e-13]
