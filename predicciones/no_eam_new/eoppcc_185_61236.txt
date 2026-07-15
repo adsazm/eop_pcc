@@ -1,0 +1,11 @@
+61236 	nan 	nan 	nan 	nan 	nan 	nan 	 0.46677 	-0.07964
+61237 	nan 	nan 	nan 	nan 	nan 	nan 	 0.42628 	-0.10409
+61238 	nan 	nan 	nan 	nan 	nan 	nan 	 0.48805 	-0.15002
+61239 	nan 	nan 	nan 	nan 	nan 	nan 	 0.45330 	-0.20458
+61240 	nan 	nan 	nan 	nan 	nan 	nan 	 0.45203 	-0.23861
+61241 	nan 	nan 	nan 	nan 	nan 	nan 	 0.51659 	-0.26643
+61242 	nan 	nan 	nan 	nan 	nan 	nan 	 0.54524 	-0.27727
+61243 	nan 	nan 	nan 	nan 	nan 	nan 	 0.60371 	-0.27014
+61244 	nan 	nan 	nan 	nan 	nan 	nan 	 0.60266 	-0.24277
+61245 	nan 	nan 	nan 	nan 	nan 	nan 	 0.53353 	-0.22230
+61246 	nan 	nan 	nan 	nan 	nan 	nan 	 0.52875 	-0.20160
