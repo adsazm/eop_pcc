@@ -18,7 +18,7 @@ import zipfile
 import sys
 
 # Path to app local repository
-direc2 = "C:/Users/becario.adsaz/Documents/EOP_Predictions/stream_app"
+direc2 = "C:/Users/34626/Downloads/EOP Predictions/stream_app-main/stream_app"
 
 ################### AUXILIARY  FUNCTIONS ################################
 def read_db(num,lista):
