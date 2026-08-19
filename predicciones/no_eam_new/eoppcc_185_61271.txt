@@ -1,0 +1,11 @@
+61271 	nan 	nan 	nan 	nan 	nan 	nan 	 0.45593 	-0.23121
+61272 	nan 	nan 	nan 	nan 	nan 	nan 	 0.42784 	-0.20537
+61273 	nan 	nan 	nan 	nan 	nan 	nan 	 0.45559 	-0.16730
+61274 	nan 	nan 	nan 	nan 	nan 	nan 	 0.42524 	-0.12473
+61275 	nan 	nan 	nan 	nan 	nan 	nan 	 0.40476 	-0.11087
+61276 	nan 	nan 	nan 	nan 	nan 	nan 	 0.44439 	-0.12322
+61277 	nan 	nan 	nan 	nan 	nan 	nan 	 0.45469 	-0.14680
+61278 	nan 	nan 	nan 	nan 	nan 	nan 	 0.48392 	-0.14298
+61279 	nan 	nan 	nan 	nan 	nan 	nan 	 0.46122 	-0.11113
+61280 	nan 	nan 	nan 	nan 	nan 	nan 	 0.39072 	-0.05750
+61281 	nan 	nan 	nan 	nan 	nan 	nan 	 0.39163 	-0.03198

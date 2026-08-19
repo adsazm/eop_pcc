@@ -15,7 +15,7 @@ import os
 import matplotlib.pyplot as plt
 import sqlite3
 
-day = 61250
+day = 61271
 
 #Path to app local repository
 direc2 = "C:/Users/becario.adsaz/Documents/EOP_Predictions/stream_app"
