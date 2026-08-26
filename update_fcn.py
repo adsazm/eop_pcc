@@ -62,16 +62,6 @@ time.sleep(45)
 
 # Get downloads folder
 downloads = user_downloads_dir()
-print(downloads+'\CPO_FCN.zip')
-
-# Extract folder from .zip
-with zipfile.ZipFile(downloads+'\CPO_FCN.zip', 'r') as z:
-    z.extractall(downloads+'\CPO_FCN')
-
-# Get last day of last prediction and delete all predicted data from last update
-with closing(sqlite3.connect(f"{direc2}/eop_predictions.db")) as conn:
-    last_day=get_last_epoch(conn, 2, 'epoch')
-    delete_range(conn, last_day-564, last_day, 2) # Remove last predicted data
 
 # Today
 mjd = int(Time.now().mjd)
@@ -79,7 +69,10 @@ fday = (Time(mjd, format = 'mjd').to_datetime()).strftime('%Y%m%d')
 
 # Get today's filename
 dir1 = downloads+f'\CPO_FCN\FCN_CPO_IERS_C0420_{fday}.txt'
-print(dir1)
+
+# Extract folder from .zip
+with zipfile.ZipFile(downloads+'\CPO_FCN.zip', 'r') as z:
+    z.extractall(downloads+'\CPO_FCN')
 
 # Open file
 try :
@@ -102,6 +95,13 @@ except FileNotFoundError:
     else:
         print("El archivo no existe")
     sys.exit()
+
+# Get last day of last prediction and delete all predicted data from last update
+with closing(sqlite3.connect(f"{direc2}/eop_predictions.db")) as conn:
+    last_day=get_last_epoch(conn, 2, 'epoch')
+    delete_range(conn, last_day-564, last_day, 2) # Remove last predicted data
+
+
 
 # Get last day of new predictions
 new_day=int(float(data[-1].split()[0]))
