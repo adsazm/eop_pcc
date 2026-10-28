@@ -86,7 +86,7 @@ except FileNotFoundError:
     directory = os.path.join(downloads, "CPO_FCN")
     if os.path.exists(file):
         os.remove(file)
-        print("Archivo eliminado")
+        print("Archivo eliminado__")
     else:
         print("El archivo no existe")
     if os.path.exists(directory):
