@@ -260,20 +260,20 @@ def read_aam(today):
     r3 = requests.get(url+'get/ESMGFZ_AAM_v1.0_03h_2026.asc',params = {'entryid':r2t[ind-36-11:ind-11]})
     aamlast = r3.text
     
-    # AAM 10-day forecast data
     r4 = requests.get(url+"show", params = {'entryid':'a0dc0850-d97d-4a4b-9121-e98515e4d8c6'})
     r4t = r4.text
-    r4t = r4t[r4t.index('"name":"ESMGFZ_AAM_v1.0_W')+20:]
-    ind = r4t.index('"name":"ESMGFZ_AAM_v1.0_W')    
-    r5 = requests.get(url+'get/'+str(r4t[ind+8:ind+55]), params = {'entryid':r4t[ind-39:ind-3]})
-    aux = r5.text
+    r4t = r4t[r4t.index('"name":"ESMGFZ_AAM_v1.0')+20:]
+    ind = r4t.index('"name":"ESMGFZ_AAM_v1.0')    
+    r5 = requests.get(url+'get/'+str(r4t[ind+8:ind+41]), params = {'entryid':r4t[ind-39:ind-3]})
+    aux = r5.text    
+    
     cont,cont2,i,j = 0,0,0,0
     while(cont<40):
         if aamlast[j] =="\n":
             cont+=1
         j+=1
      
-        while(cont2<45):
+        while(cont2<40):
             if aux[i] =="\n":
               cont2+=1
             i+=1
@@ -284,9 +284,10 @@ def read_aam(today):
         # This years' data + all missing data until today
         index = 8*(today-int(last_data))
         aamlast = [aamlast[i].split() for i in range(len(aamlast)-1)]+[ld[i].split() for i in range(0,index)]
+    
     elif int(last_data) == today -1:
         # This years' data + today's predicted data
-        aamlast = [aamlast[i].split() for i in range(len(aamlast)-1)]+[ld[0].split()]
+        aamlast = [aamlast[i].split() for i in range(len(aamlast)-1)]#+[ld[0].split()]
     else:    
         return -1,0,0,0,0,0,0
     d,xma,yma,zma,xmo,ymo,zmo=generar(aamlast,False)
@@ -297,7 +298,6 @@ def read_aam(today):
     xmotion+=xmo
     ymotion+=ymo
     zmotion+=zmo
-    
     return date,xmass,ymass,zmass,xmotion,ymotion,zmotion
 
 def read_oam(today):
